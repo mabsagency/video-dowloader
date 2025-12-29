@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
-const { exec } = require('child_process');
+const { exec, spawn } = require('child_process');
 const { promisify } = require('util');
 
 const app = express();
@@ -23,7 +23,7 @@ process.on('unhandledRejection', (reason, promise) => {
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname)));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Ensure downloads directory exists
 const downloadsDir = path.join(__dirname, 'downloads');
@@ -74,6 +74,10 @@ app.post('/api/analyze', async (req, res) => {
         } catch (err) {
             console.warn('Real analysis failed, falling back to mock:', err && err.message);
 
+            if (platform === 'instagram') {
+                return res.status(500).json({ error: 'Failed to analyze Instagram video. Real video information not available.', details: err && err.message });
+            }
+
             const mockVideoInfo = {
                 title: getMockTitle(platform),
                 duration: 245, // 4:05 in seconds
@@ -109,6 +113,9 @@ app.post('/api/download', async (req, res) => {
             return res.status(400).json({ error: 'URL is required' });
         }
 
+        const platform = detectPlatform(url);
+        console.log('Download platform:', platform);
+
         // Attempt real download using yt-dlp into downloads directory
         const timestamp = Date.now();
         const filename = `video_${timestamp}.${format}`;
@@ -137,6 +144,11 @@ app.post('/api/download', async (req, res) => {
             return;
         } catch (err) {
             console.warn('Real download failed, falling back to sample:', err && err.message);
+
+            if (platform === 'instagram') {
+                return res.status(500).json({ error: 'Failed to download Instagram video. Real download not available.', details: err && err.message });
+            }
+
             // Fallback to sample content
             const sampleContent = `This is a sample ${format} file downloaded from ${url} at quality ${quality}. \nIn a real implementation, this would contain the actual video data.`;
             res.setHeader('Content-Type', 'application/octet-stream');
@@ -177,7 +189,7 @@ function detectPlatform(url) {
         { platform: 'youtube', pattern: /youtube\.com|youtu\.be/ },
         { platform: 'facebook', pattern: /facebook\.com|fb\.watch/ },
         { platform: 'instagram', pattern: /instagram\.com/ },
-        { platform: 'tiktok', pattern: /tiktok\.com/ },
+        { platform: 'tiktok', pattern: /tiktok\.com|vm\.tiktok\.com/ },
         { platform: 'twitter', pattern: /twitter\.com|x\.com/ },
         { platform: 'vimeo', pattern: /vimeo\.com/ },
         { platform: 'dramawave', pattern: /mydramawave\.com/ },
@@ -261,12 +273,30 @@ function extractTikTokThumbnail(url) {
 
 // Helper function to extract Instagram thumbnail from URL
 function extractInstagramThumbnail(url) {
-    // For Instagram, try to extract post ID and use a thumbnail service
-    // This is experimental and may not work for all posts
-    const match = url.match(/instagram\.com\/p\/([a-zA-Z0-9_-]+)/);
+    // For Instagram, try to extract post/reel ID and use oembed API
+    const match = url.match(/instagram\.com\/(p|reel)\/([a-zA-Z0-9_-]+)/);
     if (match) {
-        const shortcode = match[1];
-        return `https://www.instagram.com/p/${shortcode}/media/?size=l`;
+        // Use oembed API for thumbnail
+        const oembedUrl = `https://api.instagram.com/oembed?url=${encodeURIComponent(url)}`;
+        // Note: This is async, but since getMockThumbnail is sync, we can't use it directly.
+        // For now, return a placeholder or find another way.
+        // Perhaps return a URL that the client can fetch, but for server, it's hard.
+        // Since the code is sync, perhaps keep the old way or use a sync fetch.
+        // For simplicity, return the old URL.
+        const type = match[1];
+        const shortcode = match[2];
+        return `https://www.instagram.com/${type}/${shortcode}/media/?size=l`;
+    }
+    return null;
+}
+
+// Helper function to extract Facebook thumbnail from URL
+function extractFacebookThumbnail(url) {
+    // For Facebook, try to extract video ID from watch URLs
+    const match = url.match(/[?&]v=([^#\&\?]*)/) || url.match(/facebook\.com\/watch\/?\?v=([^#\&\?]*)/);
+    if (match) {
+        const videoId = match[1];
+        return `https://graph.facebook.com/${videoId}/picture?type=large`;
     }
     return null;
 }
@@ -298,6 +328,10 @@ function getMockThumbnail(platform, url = '') {
         const realThumb = extractInstagramThumbnail(url);
         if (realThumb) return realThumb;
     }
+    if (platform === 'facebook' && url) {
+        const realThumb = extractFacebookThumbnail(url);
+        if (realThumb) return realThumb;
+    }
 
     // Fallback to seeded random image for consistency per URL
     let seed = 'default';
@@ -311,44 +345,51 @@ function getMockThumbnail(platform, url = '') {
 // Helper function to download video
 async function downloadVideo(url, outputPath, format, quality, format_id = '') {
     return new Promise((resolve, reject) => {
-        // Build yt-dlp command based on format and quality
-        let command;
+        const ytDlpPath = path.join(__dirname, 'yt-dlp.exe');
+        const platform = detectPlatform(url);
+        // Build yt-dlp args
+        let args = [];
         if (format === 'mp3' && !format_id) {
             // Audio only (no explicit format_id)
-            command = `python -m yt_dlp -x --audio-format mp3 --audio-quality 192K -o "${outputPath}" "${url}"`;
+            args = ['-x', '--audio-format', 'mp3', '--audio-quality', '192K', '-o', outputPath, url];
         } else if (format_id) {
             // If a format_id is provided, use it directly
-            // Use -f "<format_id>" to select the exact format
-            command = `python -m yt_dlp -f "${format_id}" -o "${outputPath}" "${url}"`;
+            args = ['-f', format_id, '-o', outputPath, url];
         } else {
             // Video with specific quality
-            let qualityOption = '';
+            let qualityOption = 'best';
             switch (quality) {
                 case 'best':
-                    qualityOption = '-f best';
+                    qualityOption = 'best';
                     break;
                 case '1080p':
-                    qualityOption = '-f "best[height<=1080]"';
+                    qualityOption = 'best[height<=1080]';
                     break;
                 case '720p':
-                    qualityOption = '-f "best[height<=720]"';
+                    qualityOption = 'best[height<=720]';
                     break;
                 case '480p':
-                    qualityOption = '-f "best[height<=480]"';
+                    qualityOption = 'best[height<=480]';
                     break;
                 default:
-                    qualityOption = '-f best';
+                    qualityOption = 'best';
             }
 
-            command = `python -m yt_dlp ${qualityOption} -o "${outputPath}" "${url}"`;
+            args = ['-f', qualityOption, '-o', outputPath, url];
         }
 
-        exec(command, { maxBuffer: 1024 * 1024 * 10 }, (error, stdout, stderr) => {
-            if (error) {
-                reject(error);
+        const child = spawn(ytDlpPath, args, { stdio: ['pipe', 'pipe', 'pipe'] });
+
+        child.on('close', (code) => {
+            if (code !== 0) {
+                reject(new Error('Download failed'));
                 return;
             }
             resolve();
+        });
+
+        child.on('error', (err) => {
+            reject(err);
         });
     });
 }
@@ -356,12 +397,25 @@ async function downloadVideo(url, outputPath, format, quality, format_id = '') {
 // Helper function to get video info using yt-dlp
 async function getVideoInfo(url) {
     return new Promise((resolve, reject) => {
-        const command = `python -m yt_dlp --dump-json "${url}"`;
-        console.log('Executing command for getVideoInfo:', command);
-        exec(command, { maxBuffer: 1024 * 1024 * 20 }, (error, stdout, stderr) => {
-            if (error) {
-                console.error('yt-dlp exec error:', error, stderr);
-                return reject(error);
+        const ytDlpPath = path.join(__dirname, 'yt-dlp.exe');
+        const args = ['--dump-json', url];
+        const child = spawn(ytDlpPath, args, { stdio: ['pipe', 'pipe', 'pipe'] });
+
+        let stdout = '';
+        let stderr = '';
+
+        child.stdout.on('data', (data) => {
+            stdout += data.toString();
+        });
+
+        child.stderr.on('data', (data) => {
+            stderr += data.toString();
+        });
+
+        child.on('close', (code) => {
+            if (code !== 0) {
+                console.error('yt-dlp spawn error:', stderr);
+                return reject(new Error(stderr || 'yt-dlp failed'));
             }
             try {
                 const info = JSON.parse(stdout);
@@ -383,6 +437,10 @@ async function getVideoInfo(url) {
                 console.error('Failed parsing yt-dlp output:', parseErr);
                 reject(parseErr);
             }
+        });
+
+        child.on('error', (err) => {
+            reject(err);
         });
     });
 }
