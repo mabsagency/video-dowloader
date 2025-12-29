@@ -397,15 +397,20 @@ function formatFileSize(bytes) {
 }
 
 if (require.main === module) {
-    app.listen(PORT, () => {
-        console.log(`🚀 VidéoDownloader SaaS running at http://localhost:${PORT}`);
-        console.log('📹 Ready to download videos from any platform!');
-        console.log('🔧 Using mock data implementation (yt-dlp not available in this environment)');
-    });
+    if (require.main === module) {
+        app.listen(PORT, () => {
+            console.log(`🚀 VidéoDownloader SaaS running at http://localhost:${PORT}`);
+            console.log('📹 Ready to download videos from any platform!');
+            console.log('🔧 Using mock data implementation (yt-dlp not available in this environment)');
+        });
+    }
 }
 
+// Export the app for Vercel
+module.exports = app;
+
 // Export helpers for local testing without starting the server
-module.exports = {
+module.exports.helpers = {
     detectPlatform,
     getMockTitle,
     getMockThumbnail,
