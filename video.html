@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <base target="_self">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VidéoDownloader Pro | Téléchargez des vidéos depuis n'importe quel lien</title>
+    <meta name="description" content="SaaS professionnel pour télécharger des vidéos depuis YouTube, Facebook, Instagram, TikTok, Vimeo et toutes les plateformes vidéo">
+    <meta name="keywords" content="télécharger vidéos, downloader, SaaS, YouTube, Facebook, Instagram, TikTok, Vimeo">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#3B82F6",
+                        secondary: "#1E40AF",
+                        accent: "#10B981",
+                        dark: "#1F2937",
+                        light: "#F9FAFB"
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-slow': 'bounce 2s infinite'
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="font-sans bg-gray-50 text-gray-800">
+    <!-- Header & Navigation -->
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm shadow-lg border-b border-gray-100">
+        <nav class="container mx-auto px-6 py-5">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-5">
+                    <div class="flex-shrink-0">
+                        <img src="chat1.png" alt="VidéoDownloader Logo" class="w-16 h-16 md:w-20 md:h-20 rounded-lg object-cover shadow-sm">
+                    </div>
+                    <div class="hidden sm:block">
+                        <h1 class="text-xl md:text-2xl font-bold text-dark leading-tight">
+                            Vidéo<span class="text-primary">Downloader</span>
+                        </h1>
+                        <p class="text-xs text-primary font-medium tracking-wide uppercase">Pro SaaS Platform</p>
+                    </div>
+                    <div class="bg-gradient-to-r from-accent to-primary text-white text-xs px-3 py-1.5 rounded-full font-bold tracking-wide shadow-sm">
+                        PRO
+                    </div>
+                </div>
+
+                <div class="hidden lg:flex items-center space-x-10">
+                    <a href="#" class="text-gray-700 hover:text-primary font-medium transition-all duration-200 hover:scale-105 relative group">
+                        Accueil
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-200 group-hover:w-full"></span>
+                    </a>
+                    <a href="#" class="text-gray-700 hover:text-primary font-medium transition-all duration-200 hover:scale-105 relative group">
+                        Fonctionnalités
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-200 group-hover:w-full"></span>
+                    </a>
+                    <a href="#" class="text-gray-700 hover:text-primary font-medium transition-all duration-200 hover:scale-105 relative group">
+                        Tarifs
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-200 group-hover:w-full"></span>
+                    </a>
+                    <a href="#" class="text-gray-700 hover:text-primary font-medium transition-all duration-200 hover:scale-105 relative group">
+                        API
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-200 group-hover:w-full"></span>
+                    </a>
+                    <a href="#" class="text-gray-700 hover:text-primary font-medium transition-all duration-200 hover:scale-105 relative group">
+                        Documentation
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-200 group-hover:w-full"></span>
+                    </a>
+                </div>
+
+                <div class="flex items-center">
+                    <button class="lg:hidden text-gray-700 hover:text-primary transition-colors p-2 rounded-lg hover:bg-gray-50">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-blue-50 to-indigo-50 py-16 md:py-24">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-dark mb-6">
+                    Téléchargez des vidéos depuis
+                    <span class="text-primary">n'importe quel lien</span>
+                </h1>
+                <p class="text-xl text-gray-600 mb-10 max-w-3xl mx-auto">
+                    Notre SaaS prend en charge toutes les plateformes vidéo : YouTube, Facebook, Instagram, TikTok, Vimeo, Twitter, Dailymotion et bien plus encore.
+                </p>
+                
+                <!-- Main Download Form -->
+                <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-12">
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <div class="flex-grow">
+                            <div class="relative">
+                                <i class="fas fa-link absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                <input 
+                                    type="text" 
+                                    id="videoUrl" 
+                                    placeholder="Collez votre lien vidéo ici (ex: https://youtube.com/watch?v=...)" 
+                                    class="w-full pl-12 pr-4 py-4 border-2 border-gray-200 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                                >
+                            </div>
+                        </div>
+                        <button id="analyzeBtn" class="bg-primary text-white px-8 py-4 rounded-xl font-semibold hover:bg-secondary transition-colors shadow-lg flex items-center justify-center space-x-2">
+                            <i class="fas fa-search"></i>
+                            <span>Analyser</span>
+                        </button>
+                    </div>
+                    
+                    <div class="mt-6 text-sm text-gray-500 flex flex-wrap justify-center gap-4">
+                        <span class="flex items-center">
+                            <i class="fas fa-check-circle text-accent mr-2"></i>
+                            YouTube
+                        </span>
+                        <span class="flex items-center">
+                            <i class="fas fa-check-circle text-accent mr-2"></i>
+                            Facebook
+                        </span>
+                        <span class="flex items-center">
+                            <i class="fas fa-check-circle text-accent mr-2"></i>
+                            Instagram
+                        </span>
+                        <span class="fas fa-check-circle text-accent mr-2"></i>
+                            TikTok
+                        </span>
+                        <span class="flex items-center">
+                            <i class="fas fa-check-circle text-accent mr-2"></i>
+                            Vimeo
+                        </span>
+                        <span class="flex items-center">
+                            <i class="fas fa-check-circle text-accent mr-2"></i>
+                            Dramawave
+                        </span>
+                        <span class="flex items-center">
+                            <i class="fas fa-check-circle text-accent mr-2"></i>
+                            100+ plateformes
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-8">
+                    <div class="flex items-center">
+                        <i class="fas fa-shield-alt text-accent text-2xl mr-3"></i>
+                        <div>
+                            <p class="font-semibold">Sécurisé & Privé</p>
+                            <p class="text-sm text-gray-500">Aucune donnée stockée</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-bolt text-accent text-2xl mr-3"></i>
+                        <div>
+                            <p class="font-semibold">Rapide</p>
+                            <p class="text-sm text-gray-500">Téléchargement haute vitesse</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-infinity text-accent text-2xl mr-3"></i>
+                        <div>
+                            <p class="font-semibold">Illimité</p>
+                            <p class="text-sm text-gray-500">Pas de limites de téléchargement</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Supported Platforms -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-dark mb-12">Plateformes Prises en Charge</h2>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-6">
+                <div class="bg-gray-50 rounded-xl p-6 text-center hover:shadow-lg transition-shadow">
+                    <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fab fa-youtube text-red-600 text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold">YouTube</h3>
+                    <p class="text-sm text-gray-500 mt-1">4K, 1080p, MP4, MP3</p>
+                </div>
+                
+                <div class="bg-gray-50 rounded-xl p-6 text-center hover:shadow-lg transition-shadow">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fab fa-facebook text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold">Facebook</h3>
+                    <p class="text-sm text-gray-500 mt-1">Vidéos, Reels, Stories</p>
+                </div>
+                
+                <div class="bg-gray-50 rounded-xl p-6 text-center hover:shadow-lg transition-shadow">
+                    <div class="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fab fa-instagram text-pink-600 text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold">Instagram</h3>
+                    <p class="text-sm text-gray-500 mt-1">Posts, IGTV, Reels</p>
+                </div>
+                
+                <div class="bg-gray-50 rounded-xl p-6 text-center hover:shadow-lg transition-shadow">
+                    <div class="w-16 h-16 bg-black rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fab fa-tiktok text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold">TikTok</h3>
+                    <p class="text-sm text-gray-500 mt-1">Sans watermark</p>
+                </div>
+                
+                <div class="bg-gray-50 rounded-xl p-6 text-center hover:shadow-lg transition-shadow">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fab fa-twitter text-blue-400 text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold">Twitter/X</h3>
+                    <p class="text-sm text-gray-500 mt-1">Vidéos, GIFs</p>
+                </div>
+                
+                <div class="bg-gray-50 rounded-xl p-6 text-center hover:shadow-lg transition-shadow">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fab fa-vimeo-v text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold">Vimeo</h3>
+                    <p class="text-sm text-gray-500 mt-1">HD, 4K</p>
+                </div>
+
+                <div class="bg-gray-50 rounded-xl p-6 text-center hover:shadow-lg transition-shadow">
+                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-film text-purple-600 text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold">Dramawave</h3>
+                    <p class="text-sm text-gray-500 mt-1">Épisodes, Séries</p>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <p class="text-gray-600">Et 100+ autres plateformes incluant Dailymotion, Twitch, Reddit, LinkedIn, Dramawave, etc.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-dark mb-4">Fonctionnalités Avancées</h2>
+            <p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto">Notre SaaS offre toutes les fonctionnalités dont vous avez besoin pour télécharger des vidéos professionnellement</p>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-download text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Téléchargement Batch</h3>
+                    <p class="text-gray-600">Téléchargez plusieurs vidéos simultanément avec notre système de file d'attente intelligent.</p>
+                </div>
+                
+                <div class="bg-white rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-14 h-14 bg-accent/10 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-cogs text-accent text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Conversion Format</h3>
+                    <p class="text-gray-600">Convertissez en MP4, AVI, MOV, MP3, WAV et plus de 20 formats différents.</p>
+                </div>
+                
+                <div class="bg-white rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-14 h-14 bg-purple-500/10 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-cloud-download-alt text-purple-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Stockage Cloud</h3>
+                    <p class="text-gray-600">Sauvegardez directement sur Google Drive, Dropbox ou OneDrive.</p>
+                </div>
+                
+                <div class="bg-white rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-14 h-14 bg-red-500/10 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-lock text-red-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Sécurité Maximale</h3>
+                    <p class="text-gray-600">Chiffrement SSL, pas de logs, suppression automatique des fichiers.</p>
+                </div>
+                
+                <div class="bg-white rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-14 h-14 bg-yellow-500/10 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-bolt text-yellow-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Vitesse Premium</h3>
+                    <p class="text-gray-600">Serveurs optimisés pour des téléchargements jusqu'à 10x plus rapides.</p>
+                </div>
+                
+                <div class="bg-white rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-14 h-14 bg-green-500/10 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-code text-green-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">API Complète</h3>
+                    <p class="text-gray-600">Intégrez notre service dans vos applications avec notre API RESTful.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Preview Section -->
+    <section class="py-16 bg-white" id="videoPreview">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto bg-gray-50 rounded-2xl p-8 shadow-lg">
+                <h2 class="text-3xl font-bold text-center text-dark mb-8">Aperçu Vidéo</h2>
+                
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-2">
+                        <div class="bg-black rounded-xl overflow-hidden shadow-lg">
+                            <div class="aspect-video bg-gray-900 flex items-center justify-center relative" id="videoPreviewImage">
+                                <img id="videoThumbnail" src="" alt="Thumbnail" class="w-full h-full object-cover hidden">
+                                <div class="text-center" id="videoPreviewPlaceholder">
+                                    <i class="fas fa-play-circle text-white text-6xl opacity-50"></i>
+                                    <p class="text-white mt-4">Aperçu de la vidéo</p>
+                                </div>
+                            </div>
+                            <div class="p-6 bg-gray-800">
+                                <h3 class="text-white text-xl font-semibold mb-2" id="videoTitle">Titre de la vidéo</h3>
+                                <p class="text-gray-400" id="videoDescription">Description de la vidéo apparaîtra ici</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="bg-white rounded-xl p-6 shadow-md">
+                            <h3 class="text-xl font-semibold mb-6">Options de Téléchargement</h3>
+                            
+                            <div class="space-y-4" id="downloadOptions">
+                                <!-- Options will be populated by JavaScript -->
+                            </div>
+                            
+                            <div class="mt-8 pt-6 border-t border-gray-200">
+                                <div class="flex justify-between items-center mb-4">
+                                    <span class="font-medium">Qualité</span>
+                                    <select id="qualitySelect" class="border rounded-lg px-3 py-2">
+                                        <option value="best">Auto (best)</option>
+                                        <option value="1080p">1080p</option>
+                                        <option value="720p">720p</option>
+                                        <option value="480p">480p</option>
+                                        <option value="audio">Audio only</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="flex justify-between items-center mb-6">
+                                    <span class="font-medium">Format</span>
+                                    <select id="formatSelect" class="border rounded-lg px-3 py-2">
+                                        <option value="mp4">MP4</option>
+                                        <option value="mp3">MP3</option>
+                                        <option value="m4a">M4A</option>
+                                        <option value="webm">WEBM</option>
+                                        <option value="auto">Auto</option>
+                                    </select>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="block text-sm text-gray-600 mb-2">Choisir un format exact (format_id)</label>
+                                    <select id="formatIdSelect" class="w-full border rounded-lg px-3 py-2">
+                                        <option value="">(Sélectionnez un format après l'analyse)</option>
+                                    </select>
+                                </div>
+                                
+                                <button id="downloadBtn" class="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-secondary transition-colors flex items-center justify-center space-x-2">
+                                    <i class="fas fa-download"></i>
+                                    <span>Télécharger Maintenant</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Analysis History Section -->
+    <section class="py-16 bg-gray-50" id="analysisHistory">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-3xl font-bold text-center text-dark mb-8">Historique des Analyses</h2>
+                
+                <div id="historyContainer" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- History items will be populated by JavaScript -->
+                </div>
+                
+                <div id="noHistory" class="text-center text-gray-500 mt-8">
+                    <i class="fas fa-history text-4xl mb-4"></i>
+                    <p>Aucune analyse effectuée pour le moment</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-4 mb-6">
+                        <img src="chat.png" alt="VidéoDownloader Logo" class="w-14 h-14 rounded-lg object-cover">
+                        <span class="text-2xl font-bold">Vidéo<span class="text-primary">Downloader</span></span>
+                    </div>
+                    <p class="text-gray-400 mb-6">Le SaaS ultime pour télécharger des vidéos depuis n'importe quelle plateforme.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-6">Produit</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Fonctionnalités</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Tarifs</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">API</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Documentation</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Statut</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-6">Support</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Centre d'aide</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Contact</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">FAQ</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Community</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-6">Légal</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Conditions d'utilisation</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Politique de confidentialité</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Cookies</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">DMCA</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">RGPD</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 VidéoDownloader Pro. Tous droits réservés.</p>
+                <p class="mt-2 text-sm">Ce service respecte les droits d'auteur. Utilisez-le uniquement pour du contenu dont vous avez les droits.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cookie Consent -->
+    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-gray-900 text-white p-4 shadow-lg z-50 hidden">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="mb-4 md:mb-0 md:mr-6">
+                    <p class="text-sm">Nous utilisons des cookies pour améliorer votre expérience. En continuant, vous acceptez notre <a href="#" class="text-primary hover:underline">politique de cookies</a>.</p>
+                </div>
+                <div class="flex space-x-4">
+                    <button id="cookieReject" class="px-4 py-2 border border-gray-600 rounded-lg hover:bg-gray-800 transition-colors">
+                        Refuser
+                    </button>
+                    <button id="cookieAccept" class="px-4 py-2 bg-primary rounded-lg hover:bg-secondary transition-colors">
+                        Accepter
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Define data at the beginning
+        const supportedPlatforms = [
+            { "id": 1, "name": "YouTube", "icon": "youtube", "color": "red", "formats": ["4K", "1080p", "MP4", "MP3"] },
+            { "id": 2, "name": "Facebook", "icon": "facebook", "color": "blue", "formats": ["Vidéos", "Reels", "Stories"] },
+            { "id": 3, "name": "Instagram", "icon": "instagram", "color": "pink", "formats": ["Posts", "IGTV", "Reels"] },
+            { "id": 4, "name": "TikTok", "icon": "tiktok", "color": "black", "formats": ["Sans watermark"] },
+            { "id": 5, "name": "Twitter/X", "icon": "twitter", "color": "blue", "formats": ["Vidéos", "GIFs"] },
+            { "id": 6, "name": "Vimeo", "icon": "vimeo-v", "color": "green", "formats": ["HD", "4K"] }
+        ];
+
+        const downloadOptions = [
+            { "id": 1, "quality": "4K Ultra HD", "size": "1.2 GB", "format": "MP4", "resolution": "3840x2160" },
+            { "id": 2, "quality": "Full HD", "size": "850 MB", "format": "MP4", "resolution": "1920x1080" },
+            { "id": 3, "quality": "HD", "size": "450 MB", "format": "MP4", "resolution": "1280x720" },
+            { "id": 4, "quality": "SD", "size": "250 MB", "format": "MP4", "resolution": "854x480" },
+            { "id": 5, "quality": "Audio Only", "size": "15 MB", "format": "MP3", "resolution": "320 kbps" }
+        ];
+
+        const pricingPlans = [
+            { "id": 1, "name": "Gratuit", "price": "0", "features": ["10 téléchargements/mois", "Qualité standard (720p max)", "Support basique"] },
+            { "id": 2, "name": "Pro", "price": "19", "features": ["Téléchargements illimités", "Qualité 4K UHD", "Conversion 20+ formats", "Téléchargement batch", "Support prioritaire"] },
+            { "id": 3, "name": "Entreprise", "price": "99", "features": ["Tout inclus dans Pro", "Jusqu'à 10 utilisateurs", "API complète", "Support 24/7", "Dashboard d'équipe"] }
+        ];
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            // Populate download options
+            const downloadOptionsContainer = document.getElementById('downloadOptions');
+            if (downloadOptionsContainer) {
+                downloadOptions.forEach(option => {
+                    const optionElement = document.createElement('div');
+                    optionElement.className = 'flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:border-primary transition-colors cursor-pointer';
+                    optionElement.innerHTML = `
+                        <div>
+                            <div class="font-medium">${option.quality}</div>
+                            <div class="text-sm text-gray-500">${option.resolution} • ${option.format}</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="font-semibold">${option.size}</div>
+                            <button class="mt-1 text-primary hover:text-secondary text-sm font-medium">
+                                <i class="fas fa-download mr-1"></i>Télécharger
+                            </button>
+                        </div>
+                    `;
+                    downloadOptionsContainer.appendChild(optionElement);
+                });
+            }
+
+            // Load analysis history
+            loadAnalysisHistory();
+
+            // URL analysis functionality
+            const analyzeBtn = document.getElementById('analyzeBtn');
+            const videoUrlInput = document.getElementById('videoUrl');
+            const videoTitle = document.getElementById('videoTitle');
+            const videoDescription = document.getElementById('videoDescription');
+            const downloadBtn = document.getElementById('downloadBtn');
+
+            if (analyzeBtn && videoUrlInput) {
+                analyzeBtn.addEventListener('click', async function() {
+                    const url = videoUrlInput.value.trim();
+
+                    if (!url) {
+                        alert("Veuillez coller un lien vidéo valide");
+                        return;
+                    }
+
+                    // Show loading state
+                    analyzeBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>Analyse en cours...</span>';
+                    analyzeBtn.disabled = true;
+
+                    try {
+                        // Call API to analyze video
+                        const response = await fetch('/api/analyze', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ url })
+                        });
+
+                        const data = await response.json();
+
+                        if (!response.ok) {
+                            throw new Error(data.error || 'Erreur lors de l\'analyse');
+                        }
+
+                        // Update video preview with real data
+                        if (videoTitle) {
+                            videoTitle.textContent = data.videoInfo.title || "Titre non disponible";
+                        }
+                        if (videoDescription) {
+                            const duration = data.videoInfo.duration ? formatDuration(data.videoInfo.duration) : '';
+                            videoDescription.textContent = `Plateforme: ${data.platform} | Durée: ${duration} | Formats disponibles: ${data.videoInfo.formats.length}`;
+                        }
+
+                        // Display video thumbnail in preview
+                        const thumbnailImg = document.getElementById('videoThumbnail');
+                        const thumbnailPlaceholder = document.getElementById('videoPreviewPlaceholder');
+                        if (data.videoInfo.thumbnail && thumbnailImg && thumbnailPlaceholder) {
+                            thumbnailImg.src = data.videoInfo.thumbnail;
+                            thumbnailImg.classList.remove('hidden');
+                            thumbnailPlaceholder.classList.add('hidden');
+                        }
+
+                        // Update download options with real formats
+                        updateDownloadOptions(data.videoInfo.formats);
+
+                        // Scroll to preview section
+                        document.getElementById('videoPreview').scrollIntoView({
+                            behavior: 'smooth'
+                        });
+
+                        // Show success message
+                        showNotification("Vidéo analysée avec succès !", "success");
+
+                        // Reload history
+                        loadAnalysisHistory();
+
+                    } catch (error) {
+                        console.error('Error:', error);
+                        showNotification("Erreur lors de l'analyse: " + error.message, "error");
+                    } finally {
+                        // Reset button
+                        analyzeBtn.innerHTML = '<i class="fas fa-search"></i><span>Analyser</span>';
+                        analyzeBtn.disabled = false;
+                    }
+                });
+            }
+
+            // Download button functionality
+            if (downloadBtn) {
+                downloadBtn.addEventListener('click', async function() {
+                    const url = videoUrlInput.value.trim();
+
+                    if (!url) {
+                        alert("Veuillez d'abord analyser un lien vidéo");
+                        return;
+                    }
+
+                    // Get selected format_id, format and quality
+                    const formatIdSelect = document.getElementById('formatIdSelect');
+                    const formatSelect = document.getElementById('formatSelect');
+                    const qualitySelect = document.getElementById('qualitySelect');
+
+                    const format_id = formatIdSelect ? formatIdSelect.value : '';
+                    const format = formatSelect ? formatSelect.value.toLowerCase() : 'mp4';
+                    const quality = qualitySelect ? qualitySelect.value.toLowerCase().replace('p', '') : 'best';
+
+                    // Show download modal (pass format_id when available)
+                    showDownloadModal(format, quality, url, format_id);
+                });
+            }
+
+            // Cookie consent
+            const cookieConsent = document.getElementById('cookieConsent');
+            const cookieAccept = document.getElementById('cookieAccept');
+            const cookieReject = document.getElementById('cookieReject');
+
+            // Check if cookie consent was already given
+            if (!localStorage.getItem('cookieConsent')) {
+                setTimeout(() => {
+                    if (cookieConsent) {
+                        cookieConsent.classList.remove('hidden');
+                        cookieConsent.classList.add('flex');
+                    }
+                }, 2000);
+            }
+
+            if (cookieAccept) {
+                cookieAccept.addEventListener('click', function() {
+                    localStorage.setItem('cookieConsent', 'accepted');
+                    if (cookieConsent) {
+                        cookieConsent.classList.add('hidden');
+                        cookieConsent.classList.remove('flex');
+                    }
+                    showNotification("Préférences cookies enregistrées", "success");
+                });
+            }
+
+            if (cookieReject) {
+                cookieReject.addEventListener('click', function() {
+                    localStorage.setItem('cookieConsent', 'rejected');
+                    if (cookieConsent) {
+                        cookieConsent.classList.add('hidden');
+                        cookieConsent.classList.remove('flex');
+                    }
+                    showNotification("Préférences cookies enregistrées", "info");
+                });
+            }
+
+            // Mobile menu toggle
+            const mobileMenuBtn = document.querySelector('button.md\\:hidden');
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    const nav = document.querySelector('nav .hidden.md\\:flex');
+                    if (nav) {
+                        nav.classList.toggle('hidden');
+                        nav.classList.toggle('flex');
+                        nav.classList.toggle('flex-col');
+                        nav.classList.toggle('absolute');
+                        nav.classList.toggle('top-16');
+                        nav.classList.toggle('left-0');
+                        nav.classList.toggle('right-0');
+                        nav.classList.toggle('bg-white');
+                        nav.classList.toggle('p-4');
+                        nav.classList.toggle('shadow-lg');
+                    }
+                });
+            }
+
+            // Example URLs for quick testing
+            const exampleUrls = [
+                "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+                "https://www.facebook.com/watch/?v=123456789",
+                "https://www.instagram.com/p/ABC123/",
+                "https://www.tiktok.com/@user/video/123456789",
+                "https://twitter.com/user/status/123456789",
+                "https://vimeo.com/123456789"
+            ];
+
+            // Add example URLs to input placeholder on focus
+            if (videoUrlInput) {
+                let urlIndex = 0;
+                
+                videoUrlInput.addEventListener('focus', function() {
+                    if (!this.value) {
+                        this.placeholder = exampleUrls[urlIndex];
+                        urlIndex = (urlIndex + 1) % exampleUrls.length;
+                        
+                        // Cycle through examples
+                        const cyclePlaceholder = setInterval(() => {
+                            this.placeholder = exampleUrls[urlIndex];
+                            urlIndex = (urlIndex + 1) % exampleUrls.length;
+                        }, 3000);
+                        
+                        this.addEventListener('blur', function clearIntervalOnBlur() {
+                            clearInterval(cyclePlaceholder);
+                            this.removeEventListener('blur', clearIntervalOnBlur);
+                        });
+                    }
+                });
+            }
+        });
+
+        // Helper function to show notifications
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 z-50 px-6 py-3 rounded-lg shadow-lg transform transition-all duration-300 ${
+                type === 'success' ? 'bg-green-500 text-white' :
+                type === 'error' ? 'bg-red-500 text-white' :
+                'bg-blue-500 text-white'
+            }`;
+            notification.textContent = message;
+            notification.style.transform = 'translateX(100%)';
+            
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 10);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Download modal function
+        function showDownloadModal(format, quality, url, format_id = '') {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4';
+            modal.innerHTML = `
+                <div class="bg-white rounded-2xl max-w-md w-full p-8">
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-download text-green-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-2">Téléchargement en cours</h3>
+                        <p class="text-gray-600">Votre vidéo est en cours de téléchargement...</p>
+                    </div>
+
+                    <div class="space-y-4 mb-8">
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                            <span class="font-medium">Format:</span>
+                            <span class="font-semibold">${format.toUpperCase()}</span>
+                        </div>
+                        ${format_id ? `<div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg"><span class="font-medium">Format ID:</span><span class="font-semibold">${format_id}</span></div>` : ''}
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                            <span class="font-medium">Qualité:</span>
+                            <span class="font-semibold">${quality}</span>
+                        </div>
+                        <div class="text-center">
+                            <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                            <p class="text-sm text-gray-500 mt-2">Téléchargement en cours...</p>
+                        </div>
+                    </div>
+
+                    <div class="flex space-x-4">
+                        <button id="cancelDownload" class="flex-1 border-2 border-gray-300 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-colors">
+                            Annuler
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+
+            // Start download (include format_id)
+            startDownload(url, format, quality, modal, format_id);
+
+            // Add cancel functionality
+            modal.querySelector('#cancelDownload').addEventListener('click', function() {
+                document.body.removeChild(modal);
+            });
+
+            // Close modal on background click
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    document.body.removeChild(modal);
+                }
+            });
+        }
+
+        // Function to start the actual download
+        async function startDownload(url, format, quality, modal, format_id = '') {
+            try {
+                const body = { url, format, quality };
+                if (format_id) body.format_id = format_id;
+
+                const response = await fetch('/api/download', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(body)
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Erreur de téléchargement');
+                }
+
+                // Create download link from response
+                const blob = await response.blob();
+                const downloadUrl = window.URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = downloadUrl;
+
+                // Get filename from response headers
+                const contentDisposition = response.headers.get('content-disposition');
+                let filename = 'video.' + (format || 'mp4');
+                if (contentDisposition) {
+                    const filenameMatch = contentDisposition.match(/filename="(.+)"/);
+                    if (filenameMatch) {
+                        filename = filenameMatch[1];
+                    }
+                }
+                link.download = filename;
+
+                // Trigger download
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                window.URL.revokeObjectURL(downloadUrl);
+
+                // Update modal to show success
+                modal.querySelector('h3').textContent = 'Téléchargement Terminé';
+                modal.querySelector('p').textContent = 'Votre vidéo a été téléchargée avec succès !';
+                modal.querySelector('.animate-spin').style.display = 'none';
+                modal.querySelector('.text-sm').textContent = 'Fichier enregistré dans vos téléchargements';
+
+                // Change cancel button to close
+                const cancelBtn = modal.querySelector('#cancelDownload');
+                cancelBtn.textContent = 'Fermer';
+                cancelBtn.className = 'flex-1 bg-primary text-white py-3 rounded-lg font-semibold hover:bg-secondary transition-colors';
+
+                showNotification("Téléchargement terminé avec succès !", "success");
+
+            } catch (error) {
+                console.error('Download error:', error);
+
+                // Update modal to show error
+                modal.querySelector('h3').textContent = 'Erreur de Téléchargement';
+                modal.querySelector('p').textContent = error.message;
+                modal.querySelector('.animate-spin').style.display = 'none';
+                modal.querySelector('.text-sm').textContent = 'Vérifiez l\'URL et réessayez';
+
+                // Change cancel button to retry
+                const cancelBtn = modal.querySelector('#cancelDownload');
+                cancelBtn.textContent = 'Réessayer';
+                cancelBtn.onclick = () => {
+                    document.body.removeChild(modal);
+                    showDownloadModal(format, quality, url);
+                };
+
+                showNotification("Erreur de téléchargement: " + error.message, "error");
+            }
+        }
+
+        // Function to update download options with real data
+        function updateDownloadOptions(formats) {
+            const downloadOptionsContainer = document.getElementById('downloadOptions');
+            if (!downloadOptionsContainer) return;
+
+            downloadOptionsContainer.innerHTML = '';
+
+            if (formats && formats.length > 0) {
+                // Populate a distinct format_id select for precise selection
+                const formatIdSelect = document.getElementById('formatIdSelect');
+                if (formatIdSelect) {
+                    // Clear existing options but keep placeholder
+                    formatIdSelect.innerHTML = '<option value="">(Sélectionnez un format après l\'analyse)</option>';
+                }
+
+                formats.slice(0, 10).forEach(fmt => {
+                    const optionElement = document.createElement('div');
+                    optionElement.className = 'flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:border-primary transition-colors cursor-pointer';
+                    const label = fmt.format_id || (fmt.ext + (fmt.format_note ? ' ' + fmt.format_note : ''));
+                    const size = fmt.filesize || fmt.filesize_approx || 'N/A';
+                    optionElement.innerHTML = `
+                        <div>
+                            <div class="font-medium">${fmt.format || fmt.format_note || fmt.quality || fmt.resolution || label}</div>
+                            <div class="text-sm text-gray-500">${fmt.ext ? fmt.ext.toUpperCase() : 'auto'} • ${size}</div>
+                            <div class="text-xs text-gray-400">format_id: ${fmt.format_id || label}</div>
+                        </div>
+                        <div class="text-right">
+                            <button class="mt-1 text-primary hover:text-secondary text-sm font-medium select-format" data-format-id="${fmt.format_id || ''}" data-ext="${fmt.ext || ''}">
+                                <i class="fas fa-download mr-1"></i>Sélectionner
+                            </button>
+                        </div>
+                    `;
+                    downloadOptionsContainer.appendChild(optionElement);
+
+                    // Add option to formatIdSelect
+                    if (formatIdSelect && fmt.format_id) {
+                        const opt = document.createElement('option');
+                        opt.value = fmt.format_id;
+                        opt.textContent = `${fmt.format_id} — ${fmt.ext || ''} ${fmt.format_note || ''}`;
+                        formatIdSelect.appendChild(opt);
+                    }
+                });
+
+                // Add event listeners to format selection buttons
+                document.querySelectorAll('.select-format').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const formatId = this.getAttribute('data-format-id');
+                        const ext = this.getAttribute('data-ext');
+
+                        // Update selects
+                        const formatIdSelectEl = document.getElementById('formatIdSelect');
+                        const formatSelect = document.getElementById('formatSelect');
+
+                        if (formatIdSelectEl && formatId) formatIdSelectEl.value = formatId;
+                        if (formatSelect && ext) formatSelect.value = ext.toLowerCase();
+                    });
+                });
+            }
+        }
+
+        // Helper function to format duration
+        function formatDuration(seconds) {
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            const secs = seconds % 60;
+
+            if (hours > 0) {
+                return `${hours}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            }
+            return `${minutes}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // Function to load and display analysis history
+        async function loadAnalysisHistory() {
+            try {
+                const response = await fetch('/api/history');
+                const data = await response.json();
+                
+                const historyContainer = document.getElementById('historyContainer');
+                const noHistory = document.getElementById('noHistory');
+                
+                if (data.history && data.history.length > 0) {
+                    historyContainer.innerHTML = '';
+                    noHistory.classList.add('hidden');
+                    
+                    data.history.forEach(item => {
+                        const historyItem = document.createElement('div');
+                        historyItem.className = 'bg-white rounded-xl p-4 shadow-md hover:shadow-lg transition-shadow';
+                        historyItem.innerHTML = `
+                            <div class="flex items-start space-x-3">
+                                <img src="${item.videoInfo.thumbnail || 'https://picsum.photos/80/60?random=default'}" 
+                                     alt="Thumbnail" 
+                                     class="w-20 h-15 object-cover rounded-lg flex-shrink-0"
+                                     onerror="this.src='https://picsum.photos/80/60?random=default'">
+                                <div class="flex-grow min-w-0">
+                                    <h4 class="font-semibold text-sm truncate" title="${item.videoInfo.title}">${item.videoInfo.title}</h4>
+                                    <p class="text-xs text-gray-500 mt-1">${item.platform} • ${new Date(item.timestamp).toLocaleString()}</p>
+                                    ${item.isFallback ? '<span class="inline-block bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded mt-1">Fallback</span>' : ''}
+                                    <button class="load-to-preview mt-2 text-primary hover:text-secondary text-xs font-medium" data-item='${JSON.stringify(item)}'>
+                                        <i class="fas fa-eye mr-1"></i>Charger aperçu
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                        historyContainer.appendChild(historyItem);
+                    });
+                    
+                    // Add event listeners to load buttons
+                    document.querySelectorAll('.load-to-preview').forEach(btn => {
+                        btn.addEventListener('click', function() {
+                            const item = JSON.parse(this.getAttribute('data-item'));
+                            loadToPreview(item);
+                        });
+                    });
+                } else {
+                    historyContainer.innerHTML = '';
+                    noHistory.classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error('Error loading history:', error);
+            }
+        }
+
+        // Function to load history item to main preview
+        function loadToPreview(item) {
+            const videoTitle = document.getElementById('videoTitle');
+            const videoDescription = document.getElementById('videoDescription');
+            const thumbnailImg = document.getElementById('videoThumbnail');
+            const thumbnailPlaceholder = document.getElementById('videoPreviewPlaceholder');
+            
+            // Update preview
+            if (videoTitle) {
+                videoTitle.textContent = item.videoInfo.title || "Titre non disponible";
+            }
+            if (videoDescription) {
+                const duration = item.videoInfo.duration ? formatDuration(item.videoInfo.duration) : '';
+                videoDescription.textContent = `Plateforme: ${item.platform} | Durée: ${duration} | Formats disponibles: ${item.videoInfo.formats ? item.videoInfo.formats.length : 0}`;
+            }
+            
+            // Display thumbnail
+            if (item.videoInfo.thumbnail && thumbnailImg && thumbnailPlaceholder) {
+                thumbnailImg.src = item.videoInfo.thumbnail;
+                thumbnailImg.classList.remove('hidden');
+                thumbnailPlaceholder.classList.add('hidden');
+            }
+            
+            // Update download options
+            updateDownloadOptions(item.videoInfo.formats || []);
+            
+            // Update URL input
+            const videoUrlInput = document.getElementById('videoUrl');
+            if (videoUrlInput) {
+                videoUrlInput.value = item.url;
+            }
+            
+            // Scroll to preview
+            document.getElementById('videoPreview').scrollIntoView({
+                behavior: 'smooth'
+            });
+            
+            showNotification("Aperçu chargé depuis l'historique", "info");
+        }
+    </script>
+</body>
+</html>
